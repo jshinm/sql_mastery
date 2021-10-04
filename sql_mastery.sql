@@ -1,3 +1,6 @@
+-- SQLite syntax examples
+
+-- creating new table
 create table movies(
     'year', integer not null,
     'imdb_rating', integer, 
@@ -76,3 +79,25 @@ select min(downloads) from fake_apps; -- for the multiple min/max, the first row
 select avg(price) from fake_apps; -- returns 0.0 if passed TEXT
 select name, round(price, 0) from fake_apps; --returns name and round(price, 0) columns (literally) where values under price column are rounded to 0 decimal places
 -- in sqlite, n < 5 is rounded down and up if n > 5
+
+-- Group by
+select category, sum(downloads) from fake_apps
+group by category --group by doesn't need to be one of the columns selected
+order by 1;-- group by (and order by) could be indexed e.g. group by 1 to indicate `category`
+
+-- Two group by
+select category, price, avg(downloads) from fake_apps
+group by category, price; --group by price after grouped by caterogry
+
+-- using group by with HAVING
+-- When we want to limit the results of a query based on values of the individual rows, use WHERE.
+-- When we want to limit the results of a query based on an aggregate property, use HAVING.
+select category, price, avg(downloads) from fake_apps
+group by 1,2
+having avg(downloads) > 10000; -- replacing having with where will throw an error
+
+-- WHERE and HAVING can be in the same query
+select name,category,downloads from fake_apps
+where downloads > 10000
+group by 1,2
+having downloads > 20000
