@@ -101,3 +101,13 @@ select name,category,downloads from fake_apps
 where downloads > 10000
 group by 1,2
 having downloads > 20000
+
+-- JOIN
+select * from orders
+join subscriptions
+on orders.subscription_id = subscriptions.subscription_id
+
+-- seems like the tables are being inner joined here first after which the count function is wrapped to return int
+select count(*) from online
+join newspaper
+on newspaper.id = online.id; --the order of tables being joined do not yield different join product except the ordering of the columns
