@@ -1,3 +1,13 @@
+create table movies(
+    'year', integer not null,
+    'imdb_rating', integer, 
+    'name', text unique,
+    'id', integer primary key
+);
+
+-- DISTINCT (aka unique)
+select count(distinct category) --this counts for unique values of category column
+from fake_apps;
 
 -- multiple WHERE clause
 select * from movies
@@ -57,3 +67,12 @@ limit 3;
     else 'Intense'
   end as 'Mood'
 from movies;
+
+-- Aggregate
+select count(*) from fake_apps; --returns the total number of rows (note: it counts duplicate values, ie. this is not a uniuqe count)
+select sum(downloads) from fake_apps; --returns 0.0 if sum(TEXT), also doesn't take multiple values unless combined within (eg sum(id + downloads))
+select max(category) from fake_apps; -- returns asc desc item if passed TEXT
+select min(downloads) from fake_apps; -- for the multiple min/max, the first row is returned
+select avg(price) from fake_apps; -- returns 0.0 if passed TEXT
+select name, round(price, 0) from fake_apps; --returns name and round(price, 0) columns (literally) where values under price column are rounded to 0 decimal places
+-- in sqlite, n < 5 is rounded down and up if n > 5
