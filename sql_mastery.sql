@@ -102,12 +102,28 @@ where downloads > 10000
 group by 1,2
 having downloads > 20000
 
--- JOIN
+-- INNER JOIN (complete join)
 select * from orders
 join subscriptions
 on orders.subscription_id = subscriptions.subscription_id
 
--- seems like the tables are being inner joined here first after which the count function is wrapped to return int
+-- seems like the tables are being inner joined here first after which the the result is wrapped by the count and returns int
 select count(*) from online
 join newspaper
 on newspaper.id = online.id; --the order of tables being joined do not yield different join product except the ordering of the columns
+
+-- LEFT JOIN
+select * from newspaper
+left join online
+on newspaper.id = online.id
+
+-- if were to select what not joined from right table
+select * from newspaper
+left join online
+on newspaper.id = online.id
+where online.id is null; -- another words, this would be the list from LEFT table ~(LEFT JOIN on RIGHT table)
+
+-- INNER vs LEFT
+-- Return all the data from the first table no matter what. 
+-- If there are any matches with the second table, provide that information as well, 
+-- but if not, just fill the missing data with NULL values
