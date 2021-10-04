@@ -8,6 +8,23 @@ create table movies(
     'id', integer primary key
 );
 
+-- INSERT INTO (adds new row)
+ insert into celebs (id, name, age)
+ values (1, 'Justine Bieber', 22);
+
+ -- ALTER TABLE (adds new column)
+ alter table celebs
+ add column twitter_handle TEXT;
+
+-- UPDATE (modifies cell data)
+ update celebs
+ set twitter_handle = '@taylorswift13'
+ where id = 4;
+
+-- DELETE FROM
+ delete from celeb
+ where twitter_handle is null;
+
 -- DISTINCT (aka unique)
 select count(distinct category) --this counts for unique values of category column
 from fake_apps;
@@ -127,3 +144,41 @@ where online.id is null; -- another words, this would be the list from LEFT tabl
 -- Return all the data from the first table no matter what. 
 -- If there are any matches with the second table, provide that information as well, 
 -- but if not, just fill the missing data with NULL values
+
+-- Primary keys cannot be NULL
+-- Must be unique
+-- There can only be one primary key per table
+-- When the primary key for one table appears in a different table, it is called a foreign key.
+-- Candidate key is a column with unqiue items that could be a 'candidate' for a primary key
+
+-- CROSS JOIN (making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+select month, count(*) from newspaper
+cross join months --month is from months table; also cross join can be done multiple times
+where start_month <= month and end_month >= month
+group by month; -- group by on cross joined product
+
+-- UNION
+-- Tables must have the same number of columns.
+-- The columns must have the same data types in the same order as the first table.
+select * from newspaper
+union
+select * from online
+-- When you combine tables with UNION, duplicate rows will be excluded.
+-- but if you wanted to include duplicates, there is union all
+
+-- WITH
+-- creates temporary table to be refereced as alias
+with previous_query as (
+  select customer_id, count(subscription_id) as 'subscriptions' 
+  from orders
+  group by customer_id
+)
+
+select customer_name, subscriptions from customers
+join previous_query
+on previous_query.customer_id = customers.customer_id;
+-- Can we use WITH for more than one nested query in SQL?
+-- yes as follows:
+-- WITH
+-- query1 AS (SELECT column1 FROM table1 WHERE condition1),
+-- query2 AS (SELECT column2 FROM table2 WHERE condition2),
