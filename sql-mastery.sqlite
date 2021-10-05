@@ -14,7 +14,8 @@ create table movies(
 
  -- ALTER TABLE (adds new column)
  alter table celebs
- add column twitter_handle TEXT;
+ add column twitter_handle TEXT,
+ modify column twitter_handle twitter_not_handle; --modification in mysql
 
 -- UPDATE (modifies cell data)
  update celebs
