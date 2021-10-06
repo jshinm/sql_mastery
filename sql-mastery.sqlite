@@ -76,9 +76,12 @@ select name, year, imdb_rating from movies
 order by imdb_rating desc, year asc; --order by rating first then keeping the ordering the result is again order by year
 
 -- LIMIT (the number of limit can go beyond the total number of rows)
+-- LIMIT row_count
+-- LIMIT row_count OFFSET offset
+-- LIMIT offset, row_count //limit 3,1 means to get 1 row starting from the 4th row
 select * from movies
 order by imdb_rating desc
-limit 3;
+limit 3; 
 
 -- CASE (sql if-else statement), the following creates a column named 'Mood' according to the 3 conditionals below
  select name, --case comes AFTER SELECT
