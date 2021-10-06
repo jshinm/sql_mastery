@@ -1,6 +1,9 @@
+# dev
 .vscode
 
+# local sql files
 data.db
 cli_temp.sql
 
+# server credential
 azure_connection_string.txt
