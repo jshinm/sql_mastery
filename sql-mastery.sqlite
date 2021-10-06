@@ -183,3 +183,12 @@ on previous_query.customer_id = customers.customer_id;
 -- WITH
 -- query1 AS (SELECT column1 FROM table1 WHERE condition1),
 -- query2 AS (SELECT column2 FROM table2 WHERE condition2),
+
+create function funcname(N int) returns int
+begin
+  return (
+    -- sql queries here
+    -- sql queries here
+    -- sql queries here
+  );
+end
