@@ -1,1 +1,6 @@
+.vscode
+
 data.db
+cli_temp.sql
+
+azure_connection_string.txt
