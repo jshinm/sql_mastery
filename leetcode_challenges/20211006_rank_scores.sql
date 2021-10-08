@@ -23,11 +23,20 @@
 -- # Score should be unique values
 -- # table s is as original Scores table
 -- # another table is comparing unique list of score to each row of score
--- # for (id: 1, score: 3.5) => 3.4,3.5,2.0 => 3
+-- # for (id: 1, score: 3.5) => 3.5,3.6,4.0 => 3
 -- # and this is returned as column named `Rank` where Rank has to be in quotes as it's reserved keyword
 
 select Score, 
-    (select count(distinct Score) from Scores 
+    (select count(distinct Score) from Scores
      where Score >= s.Score) as `Rank`
 from Scores as s
 order by Score desc
+
+-- But the above solution calls distinct for every row increasing TC
+-- Below yields much faster computation
+
+select s1.Score, count(s2.Score) as `Rank`
+from Scores s1, (select distinct Score from Scores) s2
+where s1.Score <= s2.Score
+group by s1.id
+order by s1.Score desc;
