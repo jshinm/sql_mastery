@@ -1,52 +1,72 @@
--- SQLite syntax examples
+# SQL syntax list with examples
 
--- creating new table
+## creating new table
+```sql
 create table movies(
     'year', integer not null,
     'imdb_rating', integer, 
     'name', text unique,
     'id', integer primary key
 );
+```
 
--- INSERT INTO (adds new row)
+## INSERT INTO (adds new row)
+```sql
  insert into celebs (id, name, age)
  values (1, 'Justine Bieber', 22);
+```
 
- -- ALTER TABLE (adds new column)
+## ALTER TABLE (adds new column)
+```sql
  alter table celebs
  add column twitter_handle TEXT,
  modify column twitter_handle twitter_not_handle; --modification in mysql
+```
 
--- UPDATE (modifies cell data)
+## UPDATE (modifies cell data)
+```sql
  update celebs
  set twitter_handle = '@taylorswift13'
  where id = 4;
+```
 
--- DELETE FROM
+## DELETE FROM
+```sql
  delete from celeb
  where twitter_handle is null;
-
--- DISTINCT (aka unique)
+```
+## DISTINCT (aka unique)
+```sql
 select count(distinct category) --this counts for unique values of category column
 from fake_apps;
+```
 
--- multiple WHERE clause
+## multiple WHERE clause
+```sql
 select * from movies
 where imdb_rating < 5 and year > 2014;
+```
 
--- LIKE clause
+## LIKE clause
+```sql
 select * from movies
 where name like 'Se_en'; --specific number of characters to be matched
+```
 
--- LIKE % method
+### LIKE % method
+```sql
 select * from movies
 where name like '%man%' --nonspecific number of characters
+```
 
--- for search characters such as % and _ use backslash
+### for search characters such as % and _ use backslash
+```sql
 select * from movies
 where name like '\% \_' --similar to python
+```
 
--- BETWEEN clause
+## BETWEEN clause
+```sql
 select * from movies
 where name between 'D' and 'G' 
 -- this would select anything that starts with the letter D, E, F, AND just a single G character
@@ -54,36 +74,48 @@ where name between 'D' and 'G'
 
 select * from movies
 where year between 1990 and 1999 --here 1999 is inclusive
+```
 
--- Usage of AND
+## Usage of AND
+```sql
 select * from movies
 where year < 1985 and genre = 'horror';
 
 select * from movies
 where year between 1980 and 1985 and genre = 'horror'; --here two ANDs are two different operators
+```
 
--- Usage of OR
+## Usage of OR
+```sql
 select * from movies
 where genre = 'romance' or genre = 'comedy'; --this can't be genre = 'a' or 'b'
+```
 
--- Usage of parentheses (dictates the ordering of the command execution)
+## Usage of parentheses (dictates the ordering of the command execution)
+```sql
 select * from movies
 where (year between 2000 and 2010) 
 or (genre = 'romance' and genre = 'comedy')
+```
 
--- Order by (asc, desc)
+## Order by (asc, desc)
+```sql
 select name, year, imdb_rating from movies
 order by imdb_rating desc, year asc; --order by rating first then keeping the ordering the result is again order by year
+```
 
--- LIMIT (the number of limit can go beyond the total number of rows)
+## LIMIT (the number of limit can go beyond the total number of rows)
+```sql
 -- LIMIT row_count
 -- LIMIT row_count OFFSET offset
 -- LIMIT offset, row_count //limit 3,1 means to get 1 row starting from the 4th row
 select * from movies
 order by imdb_rating desc
 limit 3; 
+```
 
--- CASE (sql if-else statement), the following creates a column named 'Mood' according to the 3 conditionals below
+## CASE (sql if-else statement), the following creates a column named 'Mood' according to the 3 conditionals below
+```sql
  select name, --case comes AFTER SELECT
   case
     when genre = 'romance' then 'Chill' --values after THEN can be mixed types
@@ -91,8 +123,10 @@ limit 3;
     else 'Intense'
   end as 'Mood'
 from movies;
+```
 
--- Aggregate
+## Aggregate
+```sql
 select count(*) from fake_apps; --returns the total number of rows (note: it counts duplicate values, ie. this is not a uniuqe count)
 select sum(downloads) from fake_apps; --returns 0.0 if sum(TEXT), also doesn't take multiple values unless combined within (eg sum(id + downloads))
 select max(category) from fake_apps; -- returns asc desc item if passed TEXT
@@ -100,8 +134,10 @@ select min(downloads) from fake_apps; -- for the multiple min/max, the first row
 select avg(price) from fake_apps; -- returns 0.0 if passed TEXT
 select name, round(price, 0) from fake_apps; --returns name and round(price, 0) columns (literally) where values under price column are rounded to 0 decimal places
 -- in sqlite, n < 5 is rounded down and up if n > 5
+```
 
--- Group by
+## Group by
+```sql
 select category, sum(downloads) from fake_apps
 group by category --group by doesn't need to be one of the columns selected
 order by 1;-- group by (and order by) could be indexed e.g. group by 1 to indicate `category`
@@ -122,8 +158,10 @@ select name,category,downloads from fake_apps
 where downloads > 10000
 group by 1,2
 having downloads > 20000
+```
 
--- INNER JOIN (complete join)
+## INNER JOIN (complete join)
+```sql
 select * from orders
 join subscriptions
 on orders.subscription_id = subscriptions.subscription_id
@@ -132,8 +170,10 @@ on orders.subscription_id = subscriptions.subscription_id
 select count(*) from online
 join newspaper
 on newspaper.id = online.id; --the order of tables being joined do not yield different join product except the ordering of the columns
+```
 
--- LEFT JOIN
+## LEFT JOIN
+```sql
 select * from newspaper
 left join online
 on newspaper.id = online.id
@@ -154,14 +194,18 @@ where online.id is null; -- another words, this would be the list from LEFT tabl
 -- There can only be one primary key per table
 -- When the primary key for one table appears in a different table, it is called a foreign key.
 -- Candidate key is a column with unqiue items that could be a 'candidate' for a primary key
+```
 
--- CROSS JOIN (making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+## CROSS JOIN (making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+```sql
 select month, count(*) from newspaper
 cross join months --month is from months table; also cross join can be done multiple times
 where start_month <= month and end_month >= month
 group by month; -- group by on cross joined product
+```
 
--- UNION
+## UNION
+```sql
 -- Tables must have the same number of columns.
 -- The columns must have the same data types in the same order as the first table.
 select * from newspaper
@@ -169,8 +213,10 @@ union
 select * from online
 -- When you combine tables with UNION, duplicate rows will be excluded.
 -- but if you wanted to include duplicates, there is union all
+```
 
--- WITH
+## WITH
+```sql
 -- creates temporary table to be refereced as alias
 with previous_query as (
   select customer_id, count(subscription_id) as 'subscriptions' 
@@ -186,7 +232,10 @@ on previous_query.customer_id = customers.customer_id;
 -- WITH
 -- query1 AS (SELECT column1 FROM table1 WHERE condition1),
 -- query2 AS (SELECT column2 FROM table2 WHERE condition2),
+```
 
+## Define function 
+```sql
 create function funcname(N int) returns int
 begin
   return (
@@ -195,3 +244,16 @@ begin
     -- sql queries here
   );
 end
+```
+
+## User defined variable
+```sql
+set @var_name = 'variable';
+
+-- above is the same as below
+declare var_name
+set var_name = 'variable';
+
+-- there is one significant difference between := and =, and that is that := works as a variable-assignment operator everywhere, while = only works that way in SET statements, and is a comparison operator everywhere else. So SELECT @var = 1 + 1; will leave @var unchanged and return a boolean (1 or 0 depending on the current value of @var), while SELECT @var := 1 + 1; will change @var to 2, and return 2
+-- https://stackoverflow.com/questions/1009954/mysql-variable-vs-variable-whats-the-difference
+```
