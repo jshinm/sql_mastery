@@ -52,3 +52,14 @@ where
     l2.Id = l3.Id - 1 and 
     l1.Num = l2.Num and 
     l2.Num = l3.Num;
+
+-- # left join method
+select L.Num as ConsecutiveNums
+from
+(select distinct A.Num 
+from Logs A
+ left join Logs B on A.Id = B.Id - 1
+ left join Logs C on B.Id = C.Id - 1
+where
+ A.Num = B.Num and B.Num = C.Num
+) L;
