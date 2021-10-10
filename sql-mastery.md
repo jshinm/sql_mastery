@@ -1,22 +1,25 @@
 # SQL syntax list with examples
 
 ## creating new table
+
 ```sql
 create table movies(
     'year', integer not null,
-    'imdb_rating', integer, 
+    'imdb_rating', integer,
     'name', text unique,
     'id', integer primary key
 );
 ```
 
 ## INSERT INTO (adds new row)
+
 ```sql
  insert into celebs (id, name, age)
  values (1, 'Justine Bieber', 22);
 ```
 
 ## ALTER TABLE (adds new column)
+
 ```sql
  alter table celebs
  add column twitter_handle TEXT,
@@ -24,6 +27,7 @@ create table movies(
 ```
 
 ## UPDATE (modifies cell data)
+
 ```sql
  update celebs
  set twitter_handle = '@taylorswift13'
@@ -31,44 +35,52 @@ create table movies(
 ```
 
 ## DELETE FROM
+
 ```sql
  delete from celeb
  where twitter_handle is null;
 ```
+
 ## DISTINCT (aka unique)
+
 ```sql
 select count(distinct category) --this counts for unique values of category column
 from fake_apps;
 ```
 
 ## multiple WHERE clause
+
 ```sql
 select * from movies
 where imdb_rating < 5 and year > 2014;
 ```
 
 ## LIKE clause
+
 ```sql
 select * from movies
 where name like 'Se_en'; --specific number of characters to be matched
 ```
 
 ### LIKE % method
+
 ```sql
 select * from movies
 where name like '%man%' --nonspecific number of characters
 ```
 
-### for search characters such as % and _ use backslash
+### for search characters such as % and \_ use backslash
+
 ```sql
 select * from movies
 where name like '\% \_' --similar to python
 ```
 
 ## BETWEEN clause
+
 ```sql
 select * from movies
-where name between 'D' and 'G' 
+where name between 'D' and 'G'
 -- this would select anything that starts with the letter D, E, F, AND just a single G character
 -- this is because between only goes up to the second value
 
@@ -77,6 +89,7 @@ where year between 1990 and 1999 --here 1999 is inclusive
 ```
 
 ## Usage of AND
+
 ```sql
 select * from movies
 where year < 1985 and genre = 'horror';
@@ -86,35 +99,40 @@ where year between 1980 and 1985 and genre = 'horror'; --here two ANDs are two d
 ```
 
 ## Usage of OR
+
 ```sql
 select * from movies
 where genre = 'romance' or genre = 'comedy'; --this can't be genre = 'a' or 'b'
 ```
 
 ## Usage of parentheses (dictates the ordering of the command execution)
+
 ```sql
 select * from movies
-where (year between 2000 and 2010) 
+where (year between 2000 and 2010)
 or (genre = 'romance' and genre = 'comedy')
 ```
 
 ## Order by (asc, desc)
+
 ```sql
 select name, year, imdb_rating from movies
 order by imdb_rating desc, year asc; --order by rating first then keeping the ordering the result is again order by year
 ```
 
 ## LIMIT (the number of limit can go beyond the total number of rows)
+
 ```sql
 -- LIMIT row_count
 -- LIMIT row_count OFFSET offset
 -- LIMIT offset, row_count //limit 3,1 means to get 1 row starting from the 4th row
 select * from movies
 order by imdb_rating desc
-limit 3; 
+limit 3;
 ```
 
 ## CASE (sql if-else statement), the following creates a column named 'Mood' according to the 3 conditionals below
+
 ```sql
  select name, --case comes AFTER SELECT
   case
@@ -126,6 +144,7 @@ from movies;
 ```
 
 ## Aggregate
+
 ```sql
 select count(*) from fake_apps; --returns the total number of rows (note: it counts duplicate values, ie. this is not a uniuqe count)
 select sum(downloads) from fake_apps; --returns 0.0 if sum(TEXT), also doesn't take multiple values unless combined within (eg sum(id + downloads))
@@ -137,6 +156,7 @@ select name, round(price, 0) from fake_apps; --returns name and round(price, 0) 
 ```
 
 ## Group by
+
 ```sql
 select category, sum(downloads) from fake_apps
 group by category --group by doesn't need to be one of the columns selected
@@ -161,6 +181,7 @@ having downloads > 20000
 ```
 
 ## INNER JOIN (complete join)
+
 ```sql
 select * from orders
 join subscriptions
@@ -173,6 +194,7 @@ on newspaper.id = online.id; --the order of tables being joined do not yield dif
 ```
 
 ## LEFT JOIN
+
 ```sql
 select * from newspaper
 left join online
@@ -185,8 +207,8 @@ on newspaper.id = online.id
 where online.id is null; -- another words, this would be the list from LEFT table ~(LEFT JOIN on RIGHT table)
 
 -- INNER vs LEFT
--- Return all the data from the first table no matter what. 
--- If there are any matches with the second table, provide that information as well, 
+-- Return all the data from the first table no matter what.
+-- If there are any matches with the second table, provide that information as well,
 -- but if not, just fill the missing data with NULL values
 
 -- Primary keys cannot be NULL
@@ -197,6 +219,7 @@ where online.id is null; -- another words, this would be the list from LEFT tabl
 ```
 
 ## CROSS JOIN (making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+
 ```sql
 select month, count(*) from newspaper
 cross join months --month is from months table; also cross join can be done multiple times
@@ -205,6 +228,7 @@ group by month; -- group by on cross joined product
 ```
 
 ## UNION
+
 ```sql
 -- Tables must have the same number of columns.
 -- The columns must have the same data types in the same order as the first table.
@@ -216,10 +240,11 @@ select * from online
 ```
 
 ## WITH
+
 ```sql
 -- creates temporary table to be refereced as alias
 with previous_query as (
-  select customer_id, count(subscription_id) as 'subscriptions' 
+  select customer_id, count(subscription_id) as 'subscriptions'
   from orders
   group by customer_id
 )
@@ -234,7 +259,8 @@ on previous_query.customer_id = customers.customer_id;
 -- query2 AS (SELECT column2 FROM table2 WHERE condition2),
 ```
 
-## Define function 
+## Define function
+
 ```sql
 create function funcname(N int) returns int
 begin
@@ -247,6 +273,7 @@ end
 ```
 
 ## User defined variable
+
 ```sql
 set @var_name = 'variable';
 
