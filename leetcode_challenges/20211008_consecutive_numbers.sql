@@ -63,3 +63,9 @@ from Logs A
 where
  A.Num = B.Num and B.Num = C.Num
 ) L;
+
+-- where in method
+-- but if there's a gap in database, the method falls short
+select distinct Num as ConsecutiveNums
+from Logs
+where (Id + 1, Num) in (select * from Logs) and (Id + 2, Num) in (select * from Logs);
