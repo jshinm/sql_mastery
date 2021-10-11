@@ -131,9 +131,11 @@ order by imdb_rating desc
 limit 3;
 ```
 
-## CASE (sql if-else statement), the following creates a column named 'Mood' according to the 3 conditionals below
+## CASE (sql if-else statement)
 
 ```sql
+-- the following creates a column named 'Mood' according to the 3 conditionals below
+
  select name, --case comes AFTER SELECT
   case
     when genre = 'romance' then 'Chill' --values after THEN can be mixed types
@@ -218,9 +220,11 @@ where online.id is null; -- another words, this would be the list from LEFT tabl
 -- Candidate key is a column with unqiue items that could be a 'candidate' for a primary key
 ```
 
-## CROSS JOIN (making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+## CROSS JOIN 
 
 ```sql
+-- making every possible combinations, e.g. color(3 items) x shape(2 items) = result(6 items)
+
 select month, count(*) from newspaper
 cross join months --month is from months table; also cross join can be done multiple times
 where start_month <= month and end_month >= month
@@ -283,4 +287,17 @@ set var_name = 'variable';
 
 -- there is one significant difference between := and =, and that is that := works as a variable-assignment operator everywhere, while = only works that way in SET statements, and is a comparison operator everywhere else. So SELECT @var = 1 + 1; will leave @var unchanged and return a boolean (1 or 0 depending on the current value of @var), while SELECT @var := 1 + 1; will change @var to 2, and return 2
 -- https://stackoverflow.com/questions/1009954/mysql-variable-vs-variable-whats-the-difference
+```
+## IN
+
+```sql
+-- specifies multiple values in a where clause
+-- can be interpreted as OR clause
+
+select col_names
+from tables
+where col_names in (val1, val2, val3); -- or IN (select statement)
+
+select * from country_list
+where country not in ('country_A', 'country_B', 'country_C');
 ```
