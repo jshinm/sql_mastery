@@ -41,3 +41,10 @@
 -- Explanation: Joe is the only employee who earns more than his manager.
 
 -- # Write your MySQL query statement below
+
+-- # 1. Join on Left.Id and Right.ManagerId
+-- # 2. Set criterion where Left.Salary > Right.Salary
+
+select e.Name as `Employee` from Employee e 
+join Employee on Employee.Id = e.ManagerId
+where Employee.Salary < e.Salary
