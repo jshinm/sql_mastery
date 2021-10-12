@@ -38,3 +38,11 @@
 -- Explanation: a@b.com is repeated two times.
 
 -- # Write your MySQL query statement below
+-- # Count the group by values, then filter out i = 1
+select p.Email 
+    from 
+    (select p.Email, count(p.Email) as `Count`
+     from Person p 
+     group by Email
+    ) p
+where p.Count > 1
