@@ -44,3 +44,10 @@
 
 -- # Write your MySQL query statement below
 
+select w2.Id
+from
+    (select * from Weather order by RecordDate asc) w1, 
+    (select * from Weather order by RecordDate asc) w2
+where
+w1.RecordDate = subdate(w2.RecordDate,1) and
+w1.Temperature < w2.Temperature
