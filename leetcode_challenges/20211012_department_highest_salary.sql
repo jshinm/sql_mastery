@@ -64,3 +64,35 @@
 -- Explanation: Max and Jim both have the highest salary in the IT department and Henry has the highest salary in the Sales department.
 
 -- # Write your MySQL query statement below
+-- # get max on group by
+-- # join cascade (very slow)
+select 
+    e.Name `Department`, 
+    c.Name `Employee`, 
+    d.Salary 
+
+from
+(select 
+     b.Department, 
+     b.Salary
+from 
+ Employee as a, (
+select 
+     e.Name as Employee, 
+     max(e.Salary) as Salary, 
+     e.DepartmentId as Department
+from Employee e     
+group by e.DepartmentId
+) as b
+ 
+where 
+a.DepartmentId = b.Department and
+a.Salary = b.Salary
+group by b.Department, b.Salary
+) as d
+
+join Employee c on c.DepartmentId = d.Department
+join Department e on e.Id = d.Department
+
+where
+c.Salary = d.Salary
