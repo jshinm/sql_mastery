@@ -293,6 +293,7 @@ set var_name = 'variable';
 ```sql
 -- specifies multiple values in a where clause
 -- can be interpreted as OR clause
+-- Must be in parentheses
 
 select col_names
 from tables
