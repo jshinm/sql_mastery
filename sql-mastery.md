@@ -302,3 +302,17 @@ where col_names in (val1, val2, val3); -- or IN (select statement)
 select * from country_list
 where country not in ('country_A', 'country_B', 'country_C');
 ```
+
+## Operation with Date type
+
+```sql
+-- When subtracting date, subdate() has to be used
+-- Its counterpart for addition is adddate()
+select w2.Id
+from
+    (select * from Weather order by RecordDate asc) w1, 
+    (select * from Weather order by RecordDate asc) w2
+where
+w1.RecordDate = subdate(w2.RecordDate,1) and
+w1.Temperature < w2.Temperature
+```
