@@ -45,4 +45,10 @@ select p.Email
      from Person p 
      group by Email
     ) p
-where p.Count > 1
+where p.Count > 1;
+
+-- #group by and having method
+select Email
+from Person
+group by Email
+having count(Email) > 1;
