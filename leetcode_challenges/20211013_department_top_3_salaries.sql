@@ -80,3 +80,17 @@
 -- - There is no third-highest salary as there are only two employees
 
 -- # Write your MySQL query statement below
+Select d.Name as Department, 
+        e.Name as Employee, 
+        e.Salary 
+from Department d, 
+    Employee e 
+where 
+    e.DepartmentId = d.Id and 
+    (
+    Select count(distinct Salary) 
+    From Employee 
+    where 
+        DepartmentId = d.Id and 
+        Salary > e.Salary --for given dep ID, if salary is greater than the given salary
+    ) < 3 --inclusive of the current salary being compared, hence counting only 2
