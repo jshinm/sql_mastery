@@ -32,14 +32,16 @@ population > 25000000;
 -- union method 
 -- the order of TC is union all > union > or
 -- between union all and union, the former is faster as it doesn't require sorting after joining
-select name, area
+select name, population, area
 from World
 where
 area > 3000000
 
 union
 
-select name, population
+select name, population, area 
+-- initially didn't add all three columns for two tables. 
+-- For union, there must be the same number of columns for joining AND the matching columns for union to work properly
 from World
 where
 population > 25000000;
