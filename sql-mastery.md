@@ -316,3 +316,11 @@ where
 w1.RecordDate = subdate(w2.RecordDate,1) and
 w1.Temperature < w2.Temperature
 ```
+
+## Difference between = vs :=
+
+```sql
+-- similarly in math, := specifically refers to the assignment of value 
+-- where simple equal sign can be used for both conditional testing and variable assignment in sql
+set @val := 1;
+```
