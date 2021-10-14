@@ -27,4 +27,19 @@ select name, population, area
 from World
 where
 area > 3000000 or
-population > 25000000
+population > 25000000;
+
+-- union method 
+-- the order of TC is union all > union > or
+-- between union all and union, the former is faster as it doesn't require sorting after joining
+select name, area
+from World
+where
+area > 3000000
+
+union
+
+select name, population
+from World
+where
+population > 25000000;
