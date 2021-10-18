@@ -34,3 +34,23 @@
 
 -- # Write your MySQL query statement below
 
+with temp as (
+    select 
+        s1.id-1 as id, student 
+    from 
+        (select * from seat where id % 2 = 0) s1
+
+    union
+
+    select 
+        s2.id+1 as id, student 
+    from 
+        (select * from seat where id % 2 = 1) s2
+)
+
+select 
+    @i:=@i+1 as id, 
+    final.student 
+from 
+    (select * from temp order by id) final, 
+    (select @i:=0) init
