@@ -324,3 +324,10 @@ w1.Temperature < w2.Temperature
 -- where simple equal sign can be used for both conditional testing and variable assignment in sql
 set @val := 1;
 ```
+
+## Length()
+
+```sql
+-- length is used to count the number of characters in a given string
+length(char)
+```
