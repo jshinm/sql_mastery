@@ -31,9 +31,9 @@
 select 
     t.class 
 from 
-    (select dt.class, count(dt.class) from 
+    (select dt.class, count(dt.class) from  -- this didn't have to be double queries by replacing count with count(distinct class)
         (select distinct * from courses) as dt -- #removing duplicates
     group by dt.class
     ) as t
 where 
-    `count(dt.class)` > 4
+    `count(dt.class)` > 4 --this could have been under HAVING followed by GROUP BY
