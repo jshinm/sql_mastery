@@ -28,4 +28,12 @@
 
 -- Note:
 -- The students should not be counted duplicate in each course.
-
+select 
+    t.class 
+from 
+    (select dt.class, count(dt.class) from 
+        (select distinct * from courses) as dt -- #removing duplicates
+    group by dt.class
+    ) as t
+where 
+    `count(dt.class)` > 4
