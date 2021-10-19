@@ -44,3 +44,5 @@
 -- (2, B) and (4, D) were changed from 'f' to 'm'.
 
 -- # Write your MySQL query statement below
+update Salary
+set sex = if(sex='m','f','m')
