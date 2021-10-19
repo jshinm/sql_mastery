@@ -54,3 +54,5 @@ set sex = if(sex='m','f','m');
 
 update Salary 
 set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex)); -- XOR solution (1^1=1, 0^0=1, 0^1=0)
+-- f ^ m ^ f = m
+-- f ^ m ^ m = f
