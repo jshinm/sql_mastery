@@ -44,5 +44,13 @@
 -- (2, B) and (4, D) were changed from 'f' to 'm'.
 
 -- # Write your MySQL query statement below
+-- # swap f and m in `sex`
+-- # 1. single update statement
+-- # 2. no intermediate temp table
+-- # 3. do not write any select statement
+
 update Salary
-set sex = if(sex='m','f','m')
+set sex = if(sex='m','f','m');
+
+update Salary 
+set sex = CHAR(ASCII('f') ^ ASCII('m') ^ ASCII(sex)); -- XOR solution (1^1=1, 0^0=1, 0^1=0)
