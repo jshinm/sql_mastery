@@ -331,3 +331,9 @@ set @val := 1;
 -- length is used to count the number of characters in a given string
 length(char)
 ```
+
+## IF(cond,1,0)
+
+```sql
+if(gender='m','f','m') --swap m with f
+```
