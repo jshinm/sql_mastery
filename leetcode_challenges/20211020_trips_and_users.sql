@@ -96,3 +96,56 @@
 --   - The Cancellation Rate is (1 / 2) = 0.50
 
 -- # Write your MySQL query statement below
+-- # find the cancellation rate (num cancelled / total num request)
+-- # 1. users must not banned
+-- # 2. between 2013-10-01 and 03
+-- # 3. return the rate to 2 decimal points
+
+-- # get unbanned users of client and driver
+-- # get the inner join to exclude any client or driver who are banned
+
+with tmp as (
+select tmp1.Status, tmp1.Request_at from
+
+    (select * from Trips
+    join 
+        (select Users_Id from Users
+        where Banned = 'No' and
+        Role = 'client') cl
+    on cl.Users_Id = Client_Id) tmp1
+
+join
+
+    (select * from Trips
+    join 
+        (select Users_Id from Users
+        where Banned = 'No' and
+        Role = 'driver') dr
+    on dr.Users_Id = Driver_Id) tmp2
+
+on tmp1.Id = tmp2.Id)
+
+-- # count total # from the date group by
+-- # count total cancelled transaction from the date group by
+-- # compute the cancellation rate by conditionals where null (from non-existing cancelled transaction table) is replace by 0.00
+-- # otherwise compute cancel / total count, rounded to 2 decimal points
+
+select t1.Request_at as Day,
+case
+    when cc is null then 0.00
+    else round(cc/tc, 2)
+end as `Cancellation Rate`
+
+from 
+        (select *, count(Status) as tc from tmp
+        group by Request_at) t1
+
+    left join
+
+        (select *, count(Status) as cc from tmp
+        where Status like 'cancelled_by_%'
+        group by Request_at) t2
+
+    on t1.Request_at = t2.Request_at
+
+where t1.Request_at between '2013-10-01' and '2013-10-03'
