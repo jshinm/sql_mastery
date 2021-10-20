@@ -29,3 +29,19 @@
 -- The names of the columns in the rowset don't matter, but their order does.
 
 -- write your code in SQLite 3.11.0
+-- select last value from table where each item is > 2
+-- select second to the last value from table where each item is > 2
+-- subtract and order by event_type desc
+
+with tmp as (
+    select *, count(event_type) as cnt from events
+    group by event_type having cnt > 1
+)
+
+select * from (
+        select t1.* from events t1
+    join 
+        (select event_type from tmp) t2
+    on t1.event_type = t2.event_type
+    order by time asc
+) p1
