@@ -58,14 +58,18 @@
 
 with tmp as (
 select * from Stadium
-where people > 100)
+where people >= 100
+order by id asc)
 
-select t1.* from tmp as t1, tmp as t2, tmp as t3
+select distinct t1.* from tmp as t1, tmp as t2, tmp as t3 --#accounting for duplicates
 where
-(t1.id + 1 = t2.id and
+(t1.id + 1 = t2.id and --#get the first
 t2.id + 1 = t3.id) or
 
-(t1.id - 1 = t2.id and
+(t1.id + 1 = t2.id and --#get the middle (t1,t2,t3 doesn't really have positional significance)
+t1.id - 1 = t3.id) or --#ie. the result is same if conditionals were swapped as such t1.id - 1 = t2.id
+
+(t1.id - 1 = t2.id and --#get the last
 t2.id - 1 = t3.id)
 
 order by t1.id asc
