@@ -45,3 +45,25 @@
 -- Note that the result table has 13 columns (1 for the department id + 12 for the months).
 
 -- # Write your MySQL query statement below
+-- # group by id, case - when, then
+-- # max (or any other agg functions such as sum) need to be used
+-- # as for each month entries for each id, there are multiple rows
+-- # when group by at the end the first row for each id is used unless aggregated
+-- # when max is used all values are agged into single row
+-- # eg. [(1,1000,null), (1,null,1000)] -> [(1,1000,1000)]
+
+select distinct id,
+max(case when month = 'Jan' then revenue end) as Jan_Revenue,
+max(case when month = 'Feb' then revenue end) as Feb_Revenue,
+max(case when month = 'Mar' then revenue end) as Mar_Revenue,
+max(case when month = 'Apr' then revenue end) as Apr_Revenue,
+max(case when month = 'May' then revenue end) as May_Revenue,
+max(case when month = 'Jun' then revenue end) as Jun_Revenue,
+max(case when month = 'Jul' then revenue end) as Jul_Revenue,
+max(case when month = 'Aug' then revenue end) as Aug_Revenue,
+max(case when month = 'Sep' then revenue end) as Sep_Revenue,
+max(case when month = 'Oct' then revenue end) as Oct_Revenue,
+max(case when month = 'Nov' then revenue end) as Nov_Revenue,
+max(case when month = 'Dec' then revenue end) as Dec_Revenue
+from Department
+group by id
