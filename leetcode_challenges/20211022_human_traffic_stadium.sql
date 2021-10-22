@@ -50,3 +50,22 @@
 -- The rows with ids 2 and 3 are not included because we need at least three consecutive ids.
 
 -- # Write your MySQL query statement below
+-- # at least 3 consecutive dates with people > 100
+-- # 1. remove rows people < 100
+-- # 2. compare values among 3 tables (check first 3 [eg. 5,6,7] and last 3 [eg. 8,7,6])
+-- # if only checked first 3, the last 2 items won't be counted
+-- # 3. sort by id asc
+
+with tmp as (
+select * from Stadium
+where people > 100)
+
+select t1.* from tmp as t1, tmp as t2, tmp as t3
+where
+(t1.id + 1 = t2.id and
+t2.id + 1 = t3.id) or
+
+(t1.id - 1 = t2.id and
+t2.id - 1 = t3.id)
+
+order by t1.id asc
