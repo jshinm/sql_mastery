@@ -366,3 +366,12 @@ p1|p2|p3	Alternation; matches any of the patterns p1, p2, or p3
 {n}	n instances of preceding element
 {m,n}	m through n instances of preceding element
 ```
+
+## SUBSTRING(column, index)
+
+```sql
+-- gets the last 3 strings of the name from table students
+select name from students
+where marks > 75
+order by substring(name, -3), id
+```
