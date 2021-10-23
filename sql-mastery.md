@@ -375,3 +375,15 @@ select name from students
 where marks > 75
 order by substring(name, -3), id
 ```
+
+## DATEDIFF(date1, date2)
+
+```sql
+set sql_mode = '';
+select start_date, end_date from
+(select start_date from projects where start_date not in (select end_date from projects)) a,
+(select end_date from projects where end_date not in (select start_date from projects)) b
+where start_date < end_date
+group by start_date
+order by datediff(end_date, start_date), start_date -- difference between end and start dates
+```
