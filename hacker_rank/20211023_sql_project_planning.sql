@@ -20,3 +20,24 @@ select start_date, end_date from
 where start_date < end_date
 group by start_date
 order by datediff(end_date, start_date), start_date
+
+-- Write a query to output the names of those students whose best friends got offered a higher salary than them. 
+-- Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.
+
+-- 1. join students and packages, join friends and packages
+-- 2. select those students whose best friends got offered a higher salary
+
+select t1.name from
+
+(select s.id, name, salary from students s
+join packages p
+on s.id = p.id) t1,
+
+(select f.id, f.friend_id, salary from friends f
+join packages p
+on f.friend_id = p.id) t2
+
+where t1.salary < t2.salary and
+t1.id = t2.id
+
+order by t2.salary
