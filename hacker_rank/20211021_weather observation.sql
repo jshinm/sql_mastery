@@ -43,3 +43,10 @@ where city regexp '^[aeiou].*[aeiou]$'
 select distinct city from station
 where city regexp '^[^aeiou].*' or
 city regexp '.*[^aeiou]$'
+
+-- Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. 
+-- If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+-- order by last 3 char, then order by id
+select name from students
+where marks > 75
+order by substring(name, -3), id
