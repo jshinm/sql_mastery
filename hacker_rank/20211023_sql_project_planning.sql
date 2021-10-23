@@ -41,3 +41,18 @@ where t1.salary < t2.salary and
 t1.id = t2.id
 
 order by t2.salary
+
+-- make index to prevent counting itself
+-- run two tables where x1 = y2 and x2 = y1
+-- List the rows such that X1 <= Y1
+-- symmetric pairs in ascending order by the value of X
+set @t:= 0;
+with tmp as (
+select *, @t:=@t+1 as id from functions
+order by x, y)
+
+select distinct t1.x, t1.y from tmp t1, tmp t2
+where 
+t1.x = t2.y and t1.y = t2.x and
+t1.id <> t2.id and
+t1.x <= t1.y;
