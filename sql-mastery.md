@@ -14,6 +14,7 @@ create table movies(
 ## INSERT INTO (adds new row)
 
 ```sql
+-- values ONLY added as a new row
  insert into celebs (id, name, age)
  values (1, 'Justine Bieber', 22);
 ```
@@ -22,8 +23,9 @@ create table movies(
 
 ```sql
  alter table celebs
- add column twitter_handle TEXT,
+ add column twitter_handle TEXT, -- if doesn't work, place col_name in the braket (eg. add column [twitter_handle] text)
  modify column twitter_handle twitter_not_handle; --modification in mysql
+ drop column [col_name]
 ```
 
 ## UPDATE (modifies cell data)
@@ -386,4 +388,24 @@ select start_date, end_date from
 where start_date < end_date
 group by start_date
 order by datediff(end_date, start_date), start_date -- difference between end and start dates
+```
+
+## ROW_NUMBER()
+
+```sql
+-- collects row number based on the ordering of the price
+-- this is different from rank() as rank() would return same value for equal value
+select id, rank() over (order by price) from some_table
+```
+
+## RANK() / DENSE_RANK()
+
+```sql
+-- ranks table based on the ordering of the price
+select id, rank() over (order by price) from some_table
+-- returns (id, rank()), (4, 1), (5, 1), (1, 3), (4, 4)
+
+-- dense_rank() will not skip the rank
+select id, dense_rank() over (order by price) from some_table
+-- returns (id, rank()), (4, 1), (5, 1), (1, 2), (4, 3)
 ```
