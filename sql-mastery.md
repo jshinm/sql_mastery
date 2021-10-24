@@ -369,6 +369,15 @@ p1|p2|p3	Alternation; matches any of the patterns p1, p2, or p3
 {m,n}	m through n instances of preceding element
 ```
 
+## PARTITION BY
+
+```sql
+-- partition by is similar to pandas' group by
+-- the following groups by price and within each group the list is ordered by id
+-- then the window function is applied to each group
+select *, row_number() over (partition by price order by id) rownum from temp;
+```
+
 ## SUBSTRING(column, index)
 
 ```sql
