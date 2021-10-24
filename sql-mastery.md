@@ -1,6 +1,6 @@
 # SQL syntax list with examples
 
-## creating new table
+## CREATE TABLE
 
 ```sql
 create table movies(
@@ -41,6 +41,12 @@ create table movies(
 ```sql
  delete from celeb
  where twitter_handle is null;
+```
+
+## DROP TABLE
+
+```sql
+drop table submissions
 ```
 
 ## DISTINCT (aka unique)
