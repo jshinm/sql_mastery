@@ -4,14 +4,16 @@
 
 ```sql
 create table movies(
-    'year', integer not null,
-    'imdb_rating', integer,
-    'name', text unique,
-    'id', integer primary key
+    'year' integer not null,
+    'imdb_rating' integer check (imdb_rating > 5),
+    'name' text unique,
+    'id' integer primary key,
+    'car' text default 'toyota',
+    constraint alias_for_constraint unique(year, name)
 );
 ```
 
-## INSERT INTO (adds new row)
+## INSERT INTO (row manipulation)
 
 ```sql
 -- values ONLY added as a new row
@@ -19,13 +21,27 @@ create table movies(
  values (1, 'Justine Bieber', 22);
 ```
 
-## ALTER TABLE (adds new column)
+## ALTER TABLE (column manipulation)
 
 ```sql
  alter table celebs
  add column twitter_handle TEXT, -- if doesn't work, place col_name in the braket (eg. add column [twitter_handle] text)
+ 
+ alter table celebs
  modify column twitter_handle twitter_not_handle; --modification in mysql
- drop column [col_name]
+--  alter column in sqlserver
+ 
+ alter table celebs
+ drop column [col_name];
+
+ alter table celebs
+ add unqiue(some_column);
+
+ alter table celebs
+ add constraint alias_for_constraint check(col = 'value');
+
+ alter table celebs
+ drop constraint alias_for_constraint;
 ```
 
 ## UPDATE (modifies cell data)
@@ -43,9 +59,11 @@ create table movies(
  where twitter_handle is null;
 ```
 
-## DROP TABLE
+## DROP
 
 ```sql
+drop database some_datbase
+
 drop table submissions
 ```
 
@@ -54,6 +72,16 @@ drop table submissions
 ```sql
 select count(distinct category) --this counts for unique values of category column
 from fake_apps;
+```
+
+## CREATE INDEX
+
+```sql
+-- works in sqlserver
+create index idx_name
+on table_name (col_name);
+
+drop index table_name.idx_name;
 ```
 
 ## multiple WHERE clause
