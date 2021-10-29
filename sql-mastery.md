@@ -453,3 +453,24 @@ select id, rank() over (order by price) from some_table
 select id, dense_rank() over (order by price) from some_table
 -- returns (id, rank()), (4, 1), (5, 1), (1, 2), (4, 3)
 ```
+
+## CAST(col as [data type])
+- Changes data type
+```sql
+-- changes string column (salary) into float
+select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '') as float))) as int) from employees
+```
+
+## REPLACE(col, from, to)
+- Replaces character regardless of its data type
+```sql
+-- replace function reads int column and replaces zero with empty string after which the column type becomes varchar
+select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '') as float))) as int) from employees
+```
+
+## CEILING(col)
+- Rounds up
+```sql
+-- rounds up the computation inside the parenthesis
+select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '') as float))) as int) from employees
+```
