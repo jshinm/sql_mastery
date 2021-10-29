@@ -377,6 +377,7 @@ if(gender='m','f','m') --swap m with f
 ## REGEXP (REGEXP statement)
 
 ```sql
+-- SQL server does NOT support REGEXP instead it can match pattern using LIKE clause
 -- select all city names that start with vowel and end with vowel
 select city from station
 where city regexp '^[aeiou].*[aeiou]$'
