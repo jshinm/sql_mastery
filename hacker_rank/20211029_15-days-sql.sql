@@ -61,14 +61,18 @@ on tbl1.submission_date = tbl2.submission_date
 
 order by submission_date;
 
-select s.*, h.name from (
-select * from ( -- table for highest count each day 
-select *, row_number() over (partition by submission_date order by each_count desc, hacker_id asc) cnt
-from (
-select *, count(*) over (partition by hacker_id, submission_date) as each_count
-from submissions) each_tmp
-) each_tmp2
-where cnt = 1 ) s
 
-join hackers h
-on s.hacker_id = h.hacker_id;
+------- correct response from discussion in MySQL
+select 
+submission_date ,
+
+( SELECT COUNT(distinct hacker_id)  
+ FROM Submissions s2  
+ WHERE s2.submission_date = s1.submission_date AND    (SELECT COUNT(distinct s3.submission_date) FROM      Submissions s3 WHERE s3.hacker_id = s2.hacker_id AND s3.submission_date < s1.submission_date) = dateDIFF(s1.submission_date , '2016-03-01')) ,
+
+(select hacker_id  from submissions s2 where s2.submission_date = s1.submission_date 
+group by hacker_id order by count(submission_id) desc , hacker_id limit 1) as shit,
+(select name from hackers where hacker_id = shit)
+from 
+(select distinct submission_date from submissions) s1
+group by submission_date;
