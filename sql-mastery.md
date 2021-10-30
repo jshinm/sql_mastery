@@ -459,6 +459,11 @@ select id, dense_rank() over (order by price) from some_table
 ```sql
 -- changes string column (salary) into float
 select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '') as float))) as int) from employees
+
+-- cast as user-specific data type
+-- where decimal(p, s), numeric(p, s)
+-- where p: max num decimal digits to be stored, s: decimal point to be rounded
+select cast(sum(lat_n) as decimal(38,2)) lat, cast(sum(long_w) as decimal(38,2)) lon from station
 ```
 
 ## REPLACE(col, from, to)
