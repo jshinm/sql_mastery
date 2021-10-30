@@ -15,3 +15,11 @@ with tmp as (
 
 select earnings, count(rnk) from tmp
 group by earnings
+
+
+-- Query the following two values from the STATION table:
+
+-- The sum of all values in LAT_N rounded to a scale of  decimal places.
+-- The sum of all values in LONG_W rounded to a scale of  decimal places.
+
+select cast(sum(lat_n) as decimal(38,2)) lat, cast(sum(long_w) as decimal(38,2)) lon from station
