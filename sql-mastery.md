@@ -526,3 +526,33 @@ select curdate();
 -- returns 4
 select len('name');
 ```
+
+## Concat(e)
+- Concatenate entities e into a single entity
+- Works on MySQL and SQL server
+```sql
+-- returns 123a
+select concat(1,2,3,'a');
+```
+
+## Reverse(e)
+- Reverses entity e in order
+- Works on MySQL and SQL server
+```sql
+-- Returns 444
+select num + rev from (select 123 as num, reverse(123) as rev) tmp;
+```
+
+## Trim(), ltrim(), rtrim()
+- Removes whitespace in a string
+```sql
+-- returns abc
+select trim('       abc      ');
+```
+
+## Position(keyword in string)
+- Returns index of the keyword in a string
+```sql
+-- returns 6
+select position('world' in 'hello world');
+```
