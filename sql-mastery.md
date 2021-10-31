@@ -74,6 +74,20 @@ select count(distinct category) --this counts for unique values of category colu
 from fake_apps;
 ```
 
+## SHOW
+- Shows tables and databases
+```sql
+show databases;
+show tables;
+```
+
+## DESCRIBE
+- returns table data types (in mysql, doesn't work in sql server)
+```sql
+select * from table
+describe table;
+```
+
 ## CREATE INDEX
 
 ```sql
@@ -478,4 +492,37 @@ select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '')
 ```sql
 -- rounds up the computation inside the parenthesis
 select cast(ceiling(avg(cast(salary as float)) - avg(cast(replace(salary, 0, '') as float))) as int) from employees
+```
+
+## FORMAT(char, format)
+- Formats character as stated as format arg
+```sql
+select format(12345, '#.00') from station
+```
+
+## REPEAT(e, n)
+- Repeats entity e for n times (mysql, not in sql server)
+```sql
+select repeat('a', 10);
+```
+
+## UPPER(c), LOWER(c), ucase(c), lcase(c)
+- Changes character c into a uppercase or lowercase
+```sql
+select upper('name');
+```
+
+## CURDATE()
+- Returns current date (only in mysql)
+```sql
+select curdate();
+```
+
+## Length(e)
+- Returns the length of the entity e
+- Length() or character_length() in mysql
+- len() in sql server
+```sql
+-- returns 4
+select len('name');
 ```
