@@ -313,6 +313,39 @@ on previous_query.customer_id = customers.customer_id;
 -- query2 AS (SELECT column2 FROM table2 WHERE condition2),
 ```
 
+```sql
+-- WITH clause can stack multiple queries easily
+-- One query after next takes on preceding queries
+
+-- get the list of host scores
+with tmp1 as (
+    select host_team as team,
+        case
+            when host_goals > guest_goals then 3
+            when host_goals = guest_goals then 1
+        end as score
+    from matches),
+-- get the list of guest scores
+tmp2 as (
+    select guest_team as team,
+        case
+            when host_goals < guest_goals then 3
+            when host_goals = guest_goals then 1
+        end as score
+    from matches),
+-- union of tmp1 and tmp2 (yields null values)
+tmp3 as (
+    select * from tmp1
+    union all
+    select * from tmp2
+    ),
+-- sum ignores null
+tmp4 as (
+    select team, sum(score) as score from tmp3
+    group by team
+    )
+```
+
 ## Define function
 
 ```sql
@@ -555,4 +588,14 @@ select trim('       abc      ');
 ```sql
 -- returns 6
 select position('world' in 'hello world');
+```
+
+## COALESCE(col_containing_null, val)
+- Replaces null with `val`
+```sql
+-- the function creates new column
+select teams.*, coalesce(score, 0) as points from tmp4
+right join teams
+on team_id = team
+order by points desc, team_id asc;
 ```
