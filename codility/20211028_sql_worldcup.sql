@@ -55,3 +55,41 @@
 --    30      | You       | 3
 --    40      | Up        | 0
 
+-- write your code in PostgreSQL 9.4
+-- if win: 3 points, if draws: 1 point, if lose: 0 point
+-- partition by sum per host and guest separately
+-- order by num_points desc then team_id asc
+-- join with teams to get the team_name
+
+-- get the list of host scores
+with tmp1 as (
+    select host_team as team,
+        case
+            when host_goals > guest_goals then 3
+            when host_goals = guest_goals then 1
+        end as score
+    from matches),
+-- get the list of guest scores
+tmp2 as (
+    select guest_team as team,
+        case
+            when host_goals < guest_goals then 3
+            when host_goals = guest_goals then 1
+        end as score
+    from matches),
+-- union of tmp1 and tmp2 (yields null values)
+tmp3 as (
+    select * from tmp1
+    union all
+    select * from tmp2
+    ),
+-- sum ignores null
+tmp4 as (
+    select team, sum(score) as score from tmp3
+    group by team
+    )
+
+select teams.*, coalesce(score, 0) as points from tmp4
+right join teams
+on team_id = team
+order by points desc, team_id asc;
