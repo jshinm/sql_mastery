@@ -599,3 +599,17 @@ right join teams
 on team_id = team
 order by points desc, team_id asc;
 ```
+
+## UNNEST(array)
+- Takes an array and returns a table with a row for each element in the array
+```sql
+select unnest(['A', 'B']) from tables;
+```
+
+## STRING_TO_ARRAY(string, separator)
+- Parse out each element from a string and returns an array
+```sql
+select unnest(string_to_array(categories, ';')) as category, sum(review_count) as review_cnt from yelp_business
+group by category
+order by review_cnt desc
+```
