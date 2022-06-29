@@ -619,3 +619,11 @@ order by review_cnt desc
 ```sql
 select DATE(timestamp) as d from table1
 ```
+
+## time_to_sec(delta-time)
+- converts delta time into seconds format
+
+```sql
+select time_to_sec(TIMEDIFF(exited, loaded)) as dt from table1
+where TIMEDIFF(exited, loaded) is not null
+```
