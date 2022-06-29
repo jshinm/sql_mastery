@@ -469,7 +469,7 @@ where marks > 75
 order by substring(name, -3), id
 ```
 
-## DATEDIFF(date1, date2)
+## DATEDIFF(date1, date2) | TIMEDIFF(date1, date2) 
 
 ```sql
 set sql_mode = '';
