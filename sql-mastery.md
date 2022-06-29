@@ -613,3 +613,9 @@ select unnest(string_to_array(categories, ';')) as category, sum(review_count) a
 group by category
 order by review_cnt desc
 ```
+
+## DATE(datetime)
+- Get only the date from datetime format. If string is passed, nothing returns. If number is passed, still formats but the number does not match up
+```sql
+select DATE(timestamp) as d from table1
+```
