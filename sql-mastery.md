@@ -627,3 +627,14 @@ select DATE(timestamp) as d from table1
 select time_to_sec(TIMEDIFF(exited, loaded)) as dt from table1
 where TIMEDIFF(exited, loaded) is not null
 ```
+
+## LEAD(return_value, offset)
+- The LEAD() function can be very useful for comparing the value of the current row with the value of the following row. The offset is the number of orws forward from the current row.
+```sql
+select distinct user_id 
+from (
+    select *, lead(created_at) over (partition by user_id order by created_at) as nexts
+    from amazon_transactions
+    ) q
+where datediff(nexts, created_at) <= 7;
+```
