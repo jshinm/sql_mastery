@@ -7,7 +7,7 @@ Table: customers, orders
 ```
 
 ```sql
--- customer with highest daily total order between 2019/02/01 - 2019/05/01. 
+-- customer with highest daily total order between 2019/02/01 - 2019/05/01.
 -- If more than one order per day, get total order
 -- output: first_name, total_cost, date
 -- assume every first_name is unique
@@ -19,7 +19,7 @@ Table: customers, orders
 -- 5. order by `total_order_cost`
 -- 6. get the first record
 
-with t1 as 
+with t1 as
 (select cust_id, order_date, total_order_cost from orders
 where
 order_date < "2019-05-01" and
