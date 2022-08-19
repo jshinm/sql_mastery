@@ -18,4 +18,20 @@ Table: customers, orders
 -- 4. group by date and sum the aggregate
 -- 5. order by `total_order_cost`
 -- 6. get the first record
+
+with t1 as 
+(select cust_id, order_date, total_order_cost from orders
+where
+order_date < "2019-05-01" and
+order_date > "2019-02-01"),
+
+t2 as
+(select id, first_name from customers)
+
+select id, order_date, first_name, sum(total_order_cost) tot from t1
+left join t2
+on cust_id = id
+group by order_date, first_name
+order by tot desc
+limit 1
 ```
