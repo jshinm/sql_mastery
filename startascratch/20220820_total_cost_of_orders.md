@@ -7,5 +7,11 @@ Tables: customers, orders
 ```
 
 ```sql
+-- total cost of each customer's order
+-- output: first_name, total_order_cost
+-- order by first_name
 
+-- 1. select column of interest
+-- 2. join `customers` and `ordres` tables
+-- 3. group by `first_name` and aggregate by sum of `total_order_cost`
 ```
