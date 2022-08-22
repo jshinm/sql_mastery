@@ -14,4 +14,11 @@ Tables: customers, orders
 -- 1. select column of interest
 -- 2. join `customers` and `ordres` tables
 -- 3. group by `first_name` and aggregate by sum of `total_order_cost`
+
+select id, first_name, sum(b.total_order_cost) s from customers as a
+right join
+(select cust_id, total_order_cost from orders) b
+on a.id = b.cust_id
+group by first_name
+order by s desc
 ```
