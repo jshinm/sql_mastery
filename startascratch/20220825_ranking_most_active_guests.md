@@ -15,5 +15,7 @@ Tables: customers, orders
 -- 1. group by `id_guest` and agg over `n_messages`
 -- 2. dense_rank partition by `id_guest` order by total messages in descending order
 
-
+select dense_rank() over (order by total desc) ranks, id_guest, total from
+(select id_guest, sum(n_messages) total from airbnb_contacts
+group by id_guest) a
 ```
