@@ -7,5 +7,13 @@ Tables: customers, orders
 ```
 
 ```sql
+-- rank guest based on the number of messages exchanged with the hosts.
+-- same rank should exist (i.e., don't skip ranks)
+-- order by the highest number of total messages first
+-- output: rank, guest_id, total number of messages sent
+
+-- 1. group by `id_guest` and agg over `n_messages`
+-- 2. dense_rank partition by `id_guest` order by total messages in descending order
+
 
 ```
