@@ -2,15 +2,13 @@
 
 Meta/Facebook is developing a search algorithm that will allow users to search through their post history. You are assigned to evaluate the performance of this algorithm.
 
-
 We have a table with the user's search term, search result positions, and whether or not the user clicked on the search result.
 
-
 Write a query that assigns ratings to the searches in the following way:
+
 - If the search was not clicked for any term, assign the search with rating=1
 - If the search was clicked but the top position of clicked terms was outside the top 3 positions, give it a rating=2
 - If the search was clicked and the top position of a clicked term was in the top 3 positions, give it a rating=3
-
 
 Output the search ID and it's rating.
 
@@ -26,4 +24,15 @@ Tables: fb_search_events
 -- 3. if `clicked` != 0 AND `search_results_position` < 4, then rating = 3
 
 -- return search ID and the ratings
+
+select search_id, rating from (
+    select *,
+        case
+        when clicked = 0 then 1
+        when clicked = 1 and search_results_position > 3 then 2
+        when clicked = 1 and search_results_position < 4 then 3
+        else 9999
+        end as "rating"
+    from fb_search_events
+) rate_table
 ```
