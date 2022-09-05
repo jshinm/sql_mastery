@@ -25,6 +25,8 @@ Tables: fb_search_events
 
 -- return search ID and the ratings
 
+-- problem is ambiguous and not clear with the direction
+
 select search_id, rating from (
     select *,
         case
