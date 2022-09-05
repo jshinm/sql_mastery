@@ -19,5 +19,11 @@ Tables: fb_search_events
 ```
 
 ```sql
+-- create a rating based on search result position according to problem statement
 
+-- 1. if `clicked` == 0, then `rating` = 1
+-- 2. if `clicked` != 0 AND `search_results_position` > 3, then rating = 2
+-- 3. if `clicked` != 0 AND `search_results_position` < 4, then rating = 3
+
+-- return search ID and the ratings
 ```
