@@ -638,3 +638,17 @@ from (
     ) q
 where datediff(nexts, created_at) <= 7;
 ```
+
+## REFRESH [TABLE] table_name
+- Invalidates the cached entries for Apache Spark cache, which include data and metadata of the given table or view
+- The invalidated cache is populated in lazy manner when the cached table or the query associated with it is executed again.
+
+```sql
+-- The cached entries of the table is refreshed
+-- The table is resolved from the current schema as the table name is unqualified.
+REFRESH TABLE tbl1;
+
+-- The cached entries of the view is refreshed or invalidated
+-- The view is resolved from tempDB schema, as the view name is qualified.
+REFRESH TABLE tempDB.view1;
+```
