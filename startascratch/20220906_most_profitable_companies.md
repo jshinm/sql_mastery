@@ -16,4 +16,8 @@ Tables: forbes_global_2010_2014
 -- 1. select columns of interest (name and profits)
 -- 2. order by profit in descending order
 -- 3. return top 3
+
+select company, profits from forbes_global_2010_2014
+order by profits desc
+limit 3;
 ```
